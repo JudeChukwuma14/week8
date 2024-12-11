@@ -1,0 +1,231 @@
+const mongoose = require("mongoose");
+
+const applicationSchema = new mongoose.Schema(
+  {
+    personalInfo: {
+      firstName: { type: String },
+      middleName: { type: String },
+      lastName: { type: String },
+      address: {
+        street: { type: String },
+        addressLine2: { type: String },
+        city: { type: String },
+        state: { type: String },
+        zipCode: { type: String },
+      },
+      email: { type: String },
+      phone: { type: String },
+      is18OrOlder: { type: Boolean },
+    },
+    desiredEmployment: {
+      position: {
+        type: String,
+        enum: [
+          "Registered Nurse",
+          "Medication Technician",
+          "Certified Nursing Assistant (CNA)",
+          "Home Health Aide",
+          "Licensed Practical Nurse (LPN)",
+        ],
+      },
+      desiredSalary: { type: Number },
+      startDate: { type: Date, },
+      isCurrentlyEmployed: { type: Boolean, },
+      referralSource: {
+        type: String,
+        enum: [
+          "Friend",
+          "Employee",
+          "Advertisement",
+          "Government Placement Agency",
+          "Internet",
+          "Other",
+        ],
+      },
+      mayInquireCurrentEmployer: { type: Boolean },
+      hasWorkedForCompany: { type: Boolean },
+    },
+    currentEmployer: {
+      employerName: { type: String },
+      phone: { type: String },
+      reasonForLeaving: { type: String },
+      supervisorName: { type: String },
+    },
+    employmentHistory: [
+      {
+        employerName: { type: String },
+        jobTitle: { type: String },
+        address: {
+          street: { type: String },
+          addressLine2: { type: String },
+          city: { type: String },
+          state: { type: String },
+          zipCode: { type: String },
+        },
+        from: { type: Date },
+        to: { type: Date },
+        natureOfWork: { type: String },
+        hourlyRate: { type: Number },
+        phone: { type: String },
+        supervisorName: { type: String },
+        comments: { type: String },
+      },
+      {
+        employerNameTwo: { type: String },
+        jobTitleTwo: { type: String },
+        addressTwo: {
+          streetTwo: { type: String },
+          addressLineTwo: { type: String },
+          cityTwo: { type: String },
+          stateTwo: { type: String },
+          zipCodeTwo: { type: String },
+        },
+        fromTwo: { type: Date },
+        toTwo: { type: Date },
+        natureOfWorkTwo: { type: String },
+        hourlyRateTwo: { type: Number },
+        phoneTwo: { type: String },
+        supervisorNameTwo: { type: String },
+        commentsTwo: { type: String },
+        isEligibleForUS: { type: Boolean },
+      },
+    ],
+    education: {
+      highSchool: {
+        name: { type: String },
+        yearsAttended: { type: Number },
+        graduated: { type: Boolean },
+        major: { type: String },
+      },
+      college: {
+        name: { type: String },
+        yearsAttended: { type: Number },
+        graduated: { type: Boolean },
+        major: { type: String },
+      },
+      professionalTraining: {
+        name: { type: String },
+        yearsAttended: { type: Number },
+        graduated: { type: Boolean },
+        certification: { type: String },
+      },
+    },
+    emergencyContact: {
+      name: {
+        firstName: { type: String, },
+        lastName: { type: String, },
+      },
+      address: {
+        street: { type: String },
+        addressLine2: { type: String },
+        city: { type: String },
+        state: { type: String },
+        zipCode: { type: String },
+      },
+      email: { type: String },
+      relationship: { type: String },
+    },
+    references: [
+      {
+        name: {
+          firstName: { type: String, },
+          lastName: { type: String, },
+        },
+        address: {
+          street: { type: String },
+          addressLine2: { type: String },
+          city: { type: String },
+          state: { type: String },
+          zipCode: { type: String },
+        },
+        email: { type: String },
+        phone: { type: String },
+        from: { type: Date },
+        to: { type: Date },
+      },
+      {
+        name: {
+          firstNameTwo: { type: String, },
+          lastNameTwo: { type: String, },
+        },
+        addressTwo: {
+          streetTwo: { type: String },
+          addressLineTwo: { type: String },
+          cityTwo: { type: String },
+          stateTwo: { type: String },
+          zipCodeTwo: { type: String },
+        },
+        emailTwo: { type: String },
+        phoneTwo: { type: String },
+        businessTwo: { type: String },
+        fromTwo: { type: Date },
+        toTwo: { type: Date },
+        isWorkFiveYear: { type: Boolean },
+      },
+    ],
+    additionalInfo: {
+      convictedInLast5Years: { type: Boolean },
+      certification: {
+        rn: { type: Boolean },
+        lpn: { type: Boolean },
+        gnaCna: { type: Boolean },
+        other: { type: Boolean },
+      },
+      state: { type: String },
+    },
+    skills: {
+      vitalSigns: { type: Boolean },
+      nursesNotes: { type: Boolean },
+      catheterCare: { type: Boolean },
+      insertCatheters: { type: Boolean },
+      startIVs: { type: Boolean },
+      suctionPatients: { type: Boolean },
+      oxygenSetup: { type: Boolean },
+      neurologicalAssessment: { type: Boolean },
+      intramuscularMeds: { type: Boolean },
+      ivMeds: { type: Boolean },
+      patientAssessment: { type: Boolean },
+      patientDischarge: { type: Boolean },
+      cpr: { type: Boolean },
+      icuExperience: { type: Boolean },
+      medSurgExperience: { type: Boolean },
+      specialTraining: { type: String },
+    },
+    preferences: {
+      licensedDriver: { type: Boolean },
+      willingToTravel30Mins: { type: Boolean },
+      hospitalShifts: { type: Boolean },
+      nursingHomeShifts: { type: Boolean },
+      privateDutyCases: { type: Boolean },
+      availability: {
+        daysOfWeek: [
+          {
+            type: String,
+            enum: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ],
+          },
+        ],
+      },
+      hoursPerWeek: { type: String },
+      handicaps: { type: String },
+    },
+    agreement: {
+      certifyTrueInfo: { type: Boolean, },
+      signature: { type: String },
+      applicationDate: { type: Date, },
+    },
+    attachments: {
+      type: [String],
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Application", applicationSchema);

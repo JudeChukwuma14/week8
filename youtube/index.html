@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 100 Movies</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+        .movie-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+            margin: 15px;
+            height: 300px;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .movie-info {
+            padding: 10px;
+        }
+
+        .movie-title {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mt-4">Top 100 Movies</h1>
+    <div id="movie-container" class="row"></div>
+</div>
+
+<script>
+    const url = 'https://imdb-top-100-movies.p.rapidapi.com/';
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': 'a5969c0527msh5eeb0186b57aa82p1289cejsnd5be4ded650f', // Replace with your API key
+            'x-rapidapi-host': 'imdb-top-100-movies.p.rapidapi.com'
+        }
+    };
+
+    async function fetchMovies() {
+        try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            console.log(data); // Log the fetched data to the console for debugging
+            displayMovies(data);
+        } catch (error) {
+            console.error('Error fetching movies:', error);
+        }
+    }
+
+    function displayMovies(movies) {
+        const container = document.getElementById('movie-container');
+        container.innerHTML = '';
+
+        movies.forEach(movie => {
+            const { title, image, year, rating } = movie;
+
+            const movieCard = `
+                <div class="col-md-4">
+                    <div class="movie-card">
+                        <img src="${image}" alt="${title}" class="thumbnail">
+                        <div class="movie-info">
+                            <div class="movie-title">${title} (${year})</div>
+                            <div class="movie-rating">Rating: ${rating}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += movieCard;
+        });
+    }
+
+    // Initial fetch
+    fetchMovies();
+</script>
+
+</body>
+</html>
